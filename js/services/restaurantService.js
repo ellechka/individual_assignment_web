@@ -1,19 +1,19 @@
-import { API_CONFIG } from "../config/api.js";
+import { httpGet } from "./apiService";
+
 
 export async function getRestaurants() {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/restaurants`, { timeout: API_CONFIG.TIME_OUT });
-
-    if (!response.ok) {
-        throw new Error(`Failed to fetch restaurants: ${response.status} ${response.statusText}`);
-    }
-
-    return await response.json();
+    return await httpGet("/restaurants");
 }
 
 export async function getRestaurantById(id) {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/restaurants/:${id}`, { timeout: API_CONFIG.TIME_OUT });
-    if (!response.ok) {
-        throw new Error(`Failed to fetch restaurant with ID ${id}: ${response.status} ${response.statusText}`);
-    }
+    return await httpGet(`/restaurants/${id}`);
+}
+
+export async function getDailyMenuByRestaurantId(id) {
+    return await httpGet(`/restaurants/daily/${id}/fi`)
+}
+
+export async function getWeeklyMenuRestaurantById(id) {
+    return await httpGet(`/restaurants/weekly/${id}/fi`)
 }
 
